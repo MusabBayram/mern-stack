@@ -5,7 +5,11 @@ const getNotlar = (req,res) => {
 
 const setNotlar = (req,res) => {
     
-    console.log(req.body);
+    if(!req.body.mesaj){
+        //res.status(400).json({mesaj: 'Lütfen mesaj alanını giriniz'})
+        res.status(400)
+        throw new Error('Lütfen mesaj alanını giriniz')
+    }
     res.status(200).json({mesaj: 'Controller post notlar'})
 }
 
