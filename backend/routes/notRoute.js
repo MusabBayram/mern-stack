@@ -4,6 +4,7 @@ const router = express.Router();
 
 const { getNotlar, setNotlar, updateNotlar, deleteNotlar } = require('../controllers/notController');
 
+/* 3. yöntem aynı route a sahıp olanlar zıncırleme route yapısıyla olusturma */
 router.route('/').get(getNotlar).post(setNotlar);
 router.route('/:id').put(updateNotlar).delete(deleteNotlar);
 

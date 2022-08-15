@@ -5,11 +5,12 @@ const PORT = process.env.PORT;
 
 const app = express();
 
-const serverFonk = () => {
-    console.log(`Server ${PORT} üzerinde yayında`);
-}
+app.use(express.urlencoded())
+app.use(express.json())
 
 app.use('/api/notlar', require('./routes/notRoute'))
+
+app.listen(PORT, () => console.log(`Server ${PORT} üzerinde yayında`))
 
 // app.get('/api/notlar', (request, response) => {
 //     //response.send('Notlar')
@@ -21,5 +22,3 @@ app.use('/api/notlar', require('./routes/notRoute'))
 //     }
 //     response.status(200).json(not)
 // })
-
-app.listen(PORT, serverFonk)
