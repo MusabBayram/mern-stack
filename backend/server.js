@@ -1,6 +1,8 @@
 const express = require('express');
-const dotenv = require('dotenv').config()
-const { hataYakala } = require('./middlewares/errorMiddleware')
+const dotenv = require('dotenv').config();
+const { hataYakala } = require('./middlewares/errorMiddleware');
+const baglan = require('./config/db');
+const colors = require('colors');
 
 const PORT = process.env.PORT;
 
@@ -11,7 +13,9 @@ app.use(express.json())
 
 app.use('/api/notlar', require('./routes/notRoute'))
 
-app.listen(PORT, () => console.log(`Server ${PORT} üzerinde yayında`))
+baglan()
+
+app.listen(PORT, () => console.log(`Server ${PORT} üzerinde yayında`.magenta.italic))
 
 app.use(hataYakala)
 // app.get('/api/notlar', (request, response) => {
