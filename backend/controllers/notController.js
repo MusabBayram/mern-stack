@@ -1,9 +1,12 @@
-const getNotlar = (req,res) => {
+
+const asyncHandler = require('express-async-handler')
+
+const getNotlar = asyncHandler(async(req,res) => {
     
     res.status(200).json({mesaj: 'Controller get notlar'})
-}
+})
 
-const setNotlar = (req,res) => {
+const setNotlar = asyncHandler(async(req,res) => {
     
     if(!req.body.mesaj){
         //res.status(400).json({mesaj: 'Lütfen mesaj alanını giriniz'})
@@ -11,17 +14,17 @@ const setNotlar = (req,res) => {
         throw new Error('Lütfen mesaj alanını giriniz')
     }
     res.status(200).json({mesaj: 'Controller post notlar'})
-}
+})
 
-const updateNotlar = (req,res) => {
+const updateNotlar = asyncHandler(async(req,res) => {
     
     res.status(200).json({mesaj: `Controller put ${req.params.id} idli notlar`})
-}
+})
 
-const deleteNotlar = (req,res) => {
+const deleteNotlar = asyncHandler(async(req,res) => {
     
     res.status(200).json({mesaj: `Controller delete ${req.params.id} idli notlar`})
-}
+})
 
 module.exports = {
     getNotlar,
