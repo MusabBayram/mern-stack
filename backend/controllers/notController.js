@@ -1,19 +1,27 @@
-
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
+const notModel = require('../models/notModel');
 
 const getNotlar = asyncHandler(async(req,res) => {
     
-    res.status(200).json({mesaj: 'Controller get notlar'})
+    const notlar = await notModel.find()
+
+    res.status(200).json(notlar)
 })
 
 const setNotlar = asyncHandler(async(req,res) => {
-    
-    if(!req.body.mesaj){
-        //res.status(400).json({mesaj: 'Lütfen mesaj alanını giriniz'})
+
+    if(!req.body.baslik || !req.body.aciklama){
         res.status(400)
-        throw new Error('Lütfen mesaj alanını giriniz')
+        throw new Error('Lütfen Başlık ve açıklama alanlarını giriniz')
     }
-    res.status(200).json({mesaj: 'Controller post notlar'})
+
+    const not = await notModel.create({
+        baslik: req.body.baslik,
+        aciklama: req.body.aciklama,
+        oncelik: req.body.oncelik
+    })
+
+    res.status(200).json(not)
 })
 
 const updateNotlar = asyncHandler(async(req,res) => {

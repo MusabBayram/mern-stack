@@ -15,7 +15,7 @@ const notSchema = mongoose.Schema({
 
 },
 {
-    timestams: true
+    timestamps : true
 })
 
 module.exports = mongoose.model('Not', notSchema)
