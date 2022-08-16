@@ -26,12 +26,31 @@ const setNotlar = asyncHandler(async(req,res) => {
 
 const updateNotlar = asyncHandler(async(req,res) => {
     
-    res.status(200).json({mesaj: `Controller put ${req.params.id} idli notlar`})
+    const not = await notModel.findById(req.params.id)
+
+    if(!not){
+        res.status(400)
+        throw new Error('Not Bulunamadı')
+    }
+
+    const guncellendi = await notModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
+
+    res.status(200).json(guncellendi)
 })
 
 const deleteNotlar = asyncHandler(async(req,res) => {
     
-    res.status(200).json({mesaj: `Controller delete ${req.params.id} idli notlar`})
+    const not = await notModel.findById(req.params.id)
+
+    if(!not){
+        res.status(400)
+        throw new Error('Not Bulunamadı')
+    }
+
+    await not.remove()
+
+    res.status(200).json(`${not.baslik} başlıklı Not Silindi`)
+
 })
 
 module.exports = {

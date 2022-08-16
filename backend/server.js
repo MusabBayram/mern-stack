@@ -12,6 +12,7 @@ app.use(express.urlencoded())
 app.use(express.json())
 
 app.use('/api/notlar', require('./routes/notRoute'))
+app.use('/api/kullanicilar', require('./routes/kullaniciRoute'))
 
 baglan()
 
