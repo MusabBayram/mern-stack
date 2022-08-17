@@ -45,8 +45,7 @@ const registerKullanici = asyncHandler (async(req,res) => {
         })
     }
     else {
-        res.status(400)
-        
+        res.status(400)        
         throw new Error('Geçersiz kullanıcı verisi')
     }
 
@@ -72,9 +71,16 @@ const loginKullanici = asyncHandler(async(req,res) => {
     }
 })
 
-const getKullanici = (req,res) => {
-    res.json({mesaj:'Kullanıcı Get İşlemleri'})
-}
+const getKullanici = asyncHandler( async(req,res)=>{
+
+    const {_id,kullaniciAd,email}=await Kullanici.findById(req.user.id)
+
+    res.status(200).json({
+        id:_id,
+        kullaniciAd,
+        email
+    })
+})
 
 module.exports={
     registerKullanici,
