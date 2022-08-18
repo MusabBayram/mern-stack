@@ -1,5 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const notModel = require('../models/notModel');
+const kullaniciModel = require('../models/kullaniciModel');
+
 
 const getNotlar = asyncHandler(async(req,res) => {
     
@@ -28,11 +30,23 @@ const setNotlar = asyncHandler(async(req,res) => {
 const updateNotlar = asyncHandler(async(req,res) => {
     
     const not = await notModel.findById(req.params.id)
+    const kullanici = await kullaniciModel.findById(req.user.id)
+
+    if(!kullanici){
+        res.status(400)
+        throw new Error('Kullanıcı Bulunamadı')
+    }
 
     if(!not){
         res.status(400)
         throw new Error('Not Bulunamadı')
     }
+
+    if(not.kullanici.toString() !== kullanici.id){
+        res.status(401)
+        throw new Error('Kullanıcı Yetkili Değil')
+    }
+
 
     const guncellendi = await notModel.findByIdAndUpdate(req.params.id, req.body, {new:true})
 
@@ -42,12 +56,24 @@ const updateNotlar = asyncHandler(async(req,res) => {
 const deleteNotlar = asyncHandler(async(req,res) => {
     
     const not = await notModel.findById(req.params.id)
+    const kullanici = await kullaniciModel.findById(req.user.id)
+
+    if(!kullanici){
+        res.status(400)
+        throw new Error('Kullanıcı Bulunamadı')
+    }
 
     if(!not){
         res.status(400)
         throw new Error('Not Bulunamadı')
     }
 
+    
+    if(not.kullanici.toString() !== kullanici.id){
+        res.status(401)
+        throw new Error('Kullanıcı Yetkili Değil')
+    }
+    
     await not.remove()
 
     res.status(200).json(`${not.baslik} başlıklı Not Silindi`)
