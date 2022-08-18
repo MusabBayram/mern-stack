@@ -4,9 +4,11 @@ const router = express.Router();
 
 const { getNotlar, setNotlar, updateNotlar, deleteNotlar } = require('../controllers/notController');
 
+const { kullaniciKontrol } = require('../middlewares/authMiddleware');
+
 /* 3. yöntem aynı route a sahıp olanlar zıncırleme route yapısıyla olusturma */
-router.route('/').get(getNotlar).post(setNotlar);
-router.route('/:id').put(updateNotlar).delete(deleteNotlar);
+router.route('/').get(kullaniciKontrol, getNotlar).post(kullaniciKontrol, setNotlar);
+router.route('/:id').put(kullaniciKontrol, updateNotlar).delete(kullaniciKontrol, deleteNotlar);
 
 /* 2. yöntem */
 // router.get('/', getNotlar)
