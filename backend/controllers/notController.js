@@ -3,7 +3,7 @@ const notModel = require('../models/notModel');
 
 const getNotlar = asyncHandler(async(req,res) => {
     
-    const notlar = await notModel.find()
+    const notlar = await notModel.find({kullanici:req.user.id})
 
     res.status(200).json(notlar)
 })
