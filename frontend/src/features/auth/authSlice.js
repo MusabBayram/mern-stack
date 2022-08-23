@@ -35,7 +35,23 @@ export const authSlice = createSlice({
             state.mesaj=''
         }
     },
-    extraReducers:()=>{}
+    extraReducers:(builder)=>{
+        builder
+            .addCase(register.pending,(state) => {
+                state.isYukleniyor=true
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.isYukleniyor = false
+                state.isBasari = true
+                state.kullanici = action.payload
+            })
+            .addCase(register.rejected, (state, action) => {
+                state.isYukleniyor = false
+                state.isHata = true
+                state.kullanici = null
+                state.mesaj = action.payload
+            })
+    }
 })
 
 export const {reset} =authSlice.actions;
