@@ -3,14 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-import { createStore } from 'redux';
-import { Provider } from 'react-redux'; 
-import butunReducerlar from './reducers';
-
-let store = createStore(butunReducerlar, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-
-//store.subscribe(()=> console.log(store.getState()))
-
+import { store } from './app/store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <Provider store={store}>
