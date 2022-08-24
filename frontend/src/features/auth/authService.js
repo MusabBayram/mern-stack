@@ -11,8 +11,13 @@ const register = async (kullaniciData) => {
     return response.data
 }
 
+const logout =() => {
+    localStorage.removeItem('kullanici')
+}
+
 const authService = {
-    register
+    register,
+    logout
 }
 
 export default authService

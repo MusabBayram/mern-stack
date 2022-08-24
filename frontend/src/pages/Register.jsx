@@ -1,7 +1,17 @@
-import React, { useState } from 'react'
-import { FaUser } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react'
+import { FaUser } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { register, reset } from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
 
 function Register() {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const {kullanici, isHata, isBasari, isYukleniyor, mesaj} = useSelector(state => state.auth)
 
   const [formData, setFormData] = useState({
     kullaniciAd: '',
@@ -21,7 +31,35 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(formData);
+    //console.log(formData);
+    
+    if(parola !==parolaKontrol){
+      toast.error('Parolalar eşleşmedi')
+    }
+    else{
+      const userData ={
+        kullaniciAd, email, parola
+      }
+      dispatch(register(userData))
+    }  
+  }
+
+  useEffect(()=>{
+
+    if(isHata){
+      toast.error(mesaj)
+    }
+
+    if(isBasari || kullanici){
+      navigate('/')
+    }
+
+    dispatch(reset())
+    
+  },[kullanici, isHata, isBasari, mesaj, navigate, dispatch])
+
+  if (isYukleniyor) {
+    <Spinner />
   }
 
   return (

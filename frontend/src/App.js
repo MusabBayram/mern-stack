@@ -1,14 +1,16 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Header from './components/Header';
-import Counter from './features/counter/counter';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 function App() {
    return (
      <>
-       {/* <Router>
+       <Router>
          <div className='container'>
            <Header />
            <Routes>
@@ -17,8 +19,8 @@ function App() {
              <Route path='/login' element={<Login />} />
            </Routes>
          </div>
-       </Router> */}
-       <Counter />
+       </Router>
+       <ToastContainer />
      </>
    );
 }

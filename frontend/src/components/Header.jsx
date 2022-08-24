@@ -6,7 +6,7 @@ function Header() {
   return (
     <header className='header'>
         <h2>Not Uygulaması</h2>
-        <div className='='logo>
+        <div className='logo'>
 
         </div>
         <ul>
