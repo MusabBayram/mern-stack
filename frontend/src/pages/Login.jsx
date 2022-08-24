@@ -1,7 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaUserCheck } from 'react-icons/fa';
+import { useSelector, useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { login, reset } from '../features/auth/authSlice';
+import Spinner from '../components/Spinner';
+
 
 function Login() {
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const {kullanici, isHata, isBasari, isYukleniyor, mesaj} = useSelector(state => state.auth)
 
   const [formData, setFormData] = useState({
     email: '',
@@ -19,7 +30,33 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(formData);
+    //console.log(formData);
+
+    const userData ={
+      email,
+      parola
+    }
+
+    dispatch(login(userData))
+  }
+
+  useEffect(()=>{
+
+    if(isHata){
+      toast.error(mesaj)
+    }
+
+    if(isBasari || kullanici){
+      navigate('/')
+    }
+
+    dispatch(reset())
+    
+  },[kullanici, isHata, isBasari, isYukleniyor, mesaj, navigate, dispatch])
+
+  
+  if (isYukleniyor) {
+    <Spinner />
   }
 
   return (
