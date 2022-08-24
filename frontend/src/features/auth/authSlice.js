@@ -24,6 +24,23 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
 })
 
 
+export const logout = createAsyncThunk('auth/logout', async () => {
+    
+    await authService.logout()
+})
+
+
+export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
+    try {
+        return await authService.login(user)
+    } catch (error) {
+        const mesaj = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+        return thunkAPI.rejectWithValue(mesaj)
+    }
+})
+
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -46,6 +63,20 @@ export const authSlice = createSlice({
                 state.kullanici = action.payload
             })
             .addCase(register.rejected, (state, action) => {
+                state.isYukleniyor = false
+                state.isHata = true
+                state.kullanici = null
+                state.mesaj = action.payload
+            })
+            .addCase(login.pending,(state) => {
+                state.isYukleniyor=true
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.isYukleniyor = false
+                state.isBasari = true
+                state.kullanici = action.payload
+            })
+            .addCase(login.rejected, (state, action) => {
                 state.isYukleniyor = false
                 state.isHata = true
                 state.kullanici = null
