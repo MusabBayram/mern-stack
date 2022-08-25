@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import dataService from "./dataService";
 
 const initialState = {
     notlar: [],
@@ -14,6 +14,20 @@ export const notSlice = createSlice({
     initialState,
     reducers:{
         reset: (state) => initialState
+    }
+})
+
+export const notOlustur = createAsyncThunk('notlar/create', async (notData, thunkAPI) => {
+     try {
+        
+        const token = thunkAPI.getState().auth.kullanici.token
+
+        return await dataService.notOluştur(notData, token)
+    } 
+    catch (error) {
+        const mesaj = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+        return thunkAPI.rejectWithValue(mesaj)
     }
 })
 
