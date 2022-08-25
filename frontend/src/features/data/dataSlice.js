@@ -14,6 +14,23 @@ export const notSlice = createSlice({
     initialState,
     reducers:{
         reset: (state) => initialState
+    },
+    extraReducers:(builder) => {
+        builder
+            .addCase(notOlustur.pending, (state) => {
+                state.isYukleniyor = true
+            })
+            .addCase(notOlustur.fulfilled, (state, action) => {
+                state.isYukleniyor = false
+                state.isBasari = true
+                state.notlar.push(action.payload)
+            })
+            .addCase(notOlustur.rejected, (state, action) => {
+                state.isYukleniyor = false
+                state.isHata = true
+                state.isBasari = false
+                state.mesaj = action.payload
+            })
     }
 })
 
