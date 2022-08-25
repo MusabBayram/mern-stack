@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
+import NotForm from '../components/NotForm';
 
 function Dashboard() {
 
@@ -17,7 +17,13 @@ function Dashboard() {
   
 
   return (
-    <div>Dashboard</div>
+    <>
+      <section className='heading'>
+        <h1>Merhaba {kullanici && kullanici.kullaniciAd}</h1>
+        <p>Not Ekle</p>
+      </section>
+      <NotForm />
+    </>
   )
 }
 
