@@ -16,8 +16,22 @@ const notOluştur = async (notData, token) => {
     return response.data
 }
 
+const notlarGetir = async (token) => {
+
+    const config= {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.post(API_URL, config)
+
+    return response.data
+}
+
 const dataService = {
-    notOluştur
+    notOluştur,
+    notlarGetir
 }
 
 export default dataService
