@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { notOlustur } from '../features/data/dataSlice'
+
+
+
 
 function NotForm() {
+
+    
+    const dispatch = useDispatch();
 
     const [baslik, setBaslik] =useState('')
     const [aciklama, setAciklama] =useState('')
@@ -9,7 +17,13 @@ function NotForm() {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        console.log(baslik, aciklama, oncelik);
+        //console.log(baslik, aciklama, oncelik);
+
+        
+        dispatch(notOlustur({baslik, aciklama, oncelik}))
+        setBaslik('')
+        setAciklama('')
+        setOncelik(1)
     }
   
   
