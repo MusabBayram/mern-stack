@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import NotForm from '../components/NotForm';
 import { notlarGetir, reset } from '../features/data/dataSlice'
 import Spinner from '../components/Spinner'
+import Not from '../components/Not';
 
 function Dashboard() {
 
@@ -42,6 +43,13 @@ function Dashboard() {
         <p>Not Ekle</p>
       </section>
       <NotForm />
+      <section className='content'>
+        {notlar.length >0 ? (<div className='notlar'>
+          {notlar.map((not)=>(
+            <Not key={not._id} not={not}/>
+          ))}
+        </div>):(<h3>Henüz not yüklemediniz...</h3>)}
+      </section>
     </>
   )
 }
