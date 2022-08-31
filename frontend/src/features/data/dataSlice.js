@@ -45,6 +45,20 @@ export const notSlice = createSlice({
                 state.isHata=true
                 state.mesaj=action.payload
             })
+            .addCase(notSil.pending,(state)=>{
+                state.isYukleniyor=true
+            })
+            .addCase(notSil.fulfilled,(state,action)=>{
+                state.isYukleniyor=false
+                state.isBasari=true
+                state.notlar=state.notlar.filter((not) => not._id !== action.payload.id)
+            })
+            .addCase(notSil.rejected,(state,action)=>{
+                state.isYukleniyor=false
+                state.isBasari=false
+                state.isHata=true
+                state.mesaj=action.payload
+            })
     }
 })
 
@@ -53,7 +67,7 @@ export const notOlustur = createAsyncThunk('notlar/create', async (notData, thun
         
         const token = thunkAPI.getState().auth.kullanici.token
 
-        return await dataService.notOluştur(notData, token)
+        return await dataService.notOlustur(notData, token)
     } 
     catch (error) {
         const mesaj = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -71,6 +85,17 @@ export const notlarGetir = createAsyncThunk('notlar/getAll', async (_, thunkAPI)
        const mesaj = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
        return thunkAPI.rejectWithValue(mesaj)
    }
+})
+
+export const notSil = createAsyncThunk('notlar/delete', async (id,thunkAPI) => {
+    try {       
+        const token = thunkAPI.getState().auth.kullanici.token
+        return await dataService.notSil(token)
+    } 
+    catch (error) {
+        const mesaj = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(mesaj)
+    }
 })
 
 export const {reset} = notSlice.actions
