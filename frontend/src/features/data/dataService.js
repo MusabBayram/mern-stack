@@ -37,7 +37,7 @@ const notSil = async (notId,token) => {
         }
     }
 
-    const response = await axios.post(API_URL+notId, config)
+    const response = await axios.delete(API_URL+notId, config)
 
     return response.data
 

@@ -5,7 +5,7 @@ const kullaniciModel = require('../models/kullaniciModel');
 
 const getNotlar = asyncHandler(async(req,res) => {
     
-    const notlar = await notModel.find({kullanici:req.user.id})
+    const notlar = await notModel.find({kullanici:req.user.id}).sort({createdAt: -1})
 
     res.status(200).json(notlar)
 })
@@ -76,7 +76,7 @@ const deleteNotlar = asyncHandler(async(req,res) => {
     
     await not.remove()
 
-    res.status(200).json(`${not.baslik} başlıklı Not Silindi`)
+    res.status(200).json({id:req.params.id})
 
 })
 

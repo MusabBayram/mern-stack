@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { FaWindowClose } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+import { notSil } from '../features/data/dataSlice'
 
 function Not({not}) {
   
   const [oncelikText, setOncelikText] = useState('')
+  const dispatch = useDispatch()
 
   useEffect(() => {
     switch (not.oncelik) {
@@ -20,6 +24,10 @@ function Not({not}) {
     }
     console.log(oncelikText);
   },[])
+
+  const onDelete = (id) => {
+    dispatch(notSil(id))
+  }
   
     return (
     <div className='not'>
@@ -28,6 +36,7 @@ function Not({not}) {
             <h2>{not.baslik}</h2>
             <p>{not.aciklama}</p>
             <p>{oncelikText}</p>
+            <button className='close' onClick={() => onDelete(not._id)}><FaWindowClose /></button>
         </div>
     </div>
   )

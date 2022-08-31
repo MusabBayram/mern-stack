@@ -23,7 +23,7 @@ export const notSlice = createSlice({
             .addCase(notOlustur.fulfilled, (state, action) => {
                 state.isYukleniyor = false
                 state.isBasari = true
-                state.notlar.push(action.payload)
+                state.notlar.unshift(action.payload)
             })
             .addCase(notOlustur.rejected, (state, action) => {
                 state.isYukleniyor = false
@@ -90,7 +90,7 @@ export const notlarGetir = createAsyncThunk('notlar/getAll', async (_, thunkAPI)
 export const notSil = createAsyncThunk('notlar/delete', async (id,thunkAPI) => {
     try {       
         const token = thunkAPI.getState().auth.kullanici.token
-        return await dataService.notSil(token)
+        return await dataService.notSil(id,token)
     } 
     catch (error) {
         const mesaj = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
