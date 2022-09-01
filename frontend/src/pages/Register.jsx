@@ -15,6 +15,13 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import FilledInput from '@mui/material/FilledInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 function Register() {
 
@@ -33,6 +40,8 @@ function Register() {
   const { kullaniciAd, email, parola, parolaKontrol } = formData
   
   const [buttonDisabled,setButtonDisabled]=useState(true)
+  
+  const [showPassword,setShowPassword]=useState(false)
 
   const onChange = (e) => {
     setFormData((onceki)=>({
@@ -45,6 +54,10 @@ function Register() {
 	  }
 
   }
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
+  };
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -78,63 +91,7 @@ function Register() {
   if (isYukleniyor) {
     <Spinner />
   }
-
-  // return (
-  //   <>
-  //     <section className='heading'>
-  //       <h1>
-  //         <FaUser /> Üyelik Oluştur
-  //       </h1>
-  //     </section>
-  //     <section className='form'>
-  //       <form onSubmit={onSubmit}>
-  //         <div className='form-group'>
-  //           <input 
-  //             type="text" 
-  //             className='form-control' 
-  //             id="kullaniciAd"
-  //             name="kullaniciAd"
-  //             value={kullaniciAd}
-  //             placeholder="Kullanıcı Ad Giriniz"
-  //             onChange={onChange} />
-  //         </div>
-  //         <div className='form-group'>
-  //           <input 
-  //             type="email" 
-  //             className='form-control' 
-  //             id="email"
-  //             name="email"
-  //             value={email}
-  //             placeholder="Email Giriniz"
-  //             onChange={onChange} />
-  //         </div>
-  //         <div className='form-group'>
-  //           <input 
-  //             type="password" 
-  //             className='form-control' 
-  //             id="parola"
-  //             name="parola"
-  //             value={parola}
-  //             placeholder="Parola Giriniz"
-  //             onChange={onChange} />
-  //         </div>
-  //         <div className='form-group'>
-  //           <input 
-  //             type="password" 
-  //             className='form-control' 
-  //             id="parolaKontrol"
-  //             name="parolaKontrol"
-  //             value={parolaKontrol}
-  //             placeholder="Parola Tekrarını Giriniz"
-  //             onChange={onChange} />
-  //         </div>
-  //         <div className='form-group'>
-  //           <button type='submit' className='btn btn-block'>Üye Ol</button>
-  //         </div>
-  //       </form>
-  //     </section>
-  //   </>
-  // )
+  
   return (
     <Container maxWidth="md">
 
@@ -150,9 +107,39 @@ function Register() {
 
           <TextField fullWidth label="Email Giriniz" type="email" name="email" value={email} variant="filled" onChange={onChange} margin="normal" />
 
-          <TextField fullWidth label="Parola Giriniz" type="password" name="parola" value={parola} variant="filled" onChange={onChange} margin="normal" />
+          <FormControl fullWidth sx={{marginTop:'10px'}}>
+            <InputLabel htmlFor="parola">Parolanızı Giriniz</InputLabel>
+            <FilledInput fullWidth id="parola" label="Parola Tekrarını Giriniz" 
+            type={showPassword ? 'text':'password'} name="parola" value={parola} onChange={onChange}   
+            endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+              onClick={handleClickShowPassword}
+              edge="end"
+              >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+            } />
+          </FormControl>
 
-          <TextField fullWidth label="Parola Tekrarını Giriniz" type="password" variant="filled" name="parolaKontrol" value={parolaKontrol} onChange={onChange} margin="normal" />
+
+
+          <FormControl fullWidth sx={{marginTop:'10px'}}>
+            <InputLabel htmlFor="parolaKontrol">Parola Tekrarını Giriniz</InputLabel>
+            <FilledInput fullWidth id="parolaKontrol" label="Parola Tekrarını Giriniz" 
+            type={showPassword ? 'text':'password'} name="parolaKontrol" value={parolaKontrol} onChange={onChange}   
+            endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+              onClick={handleClickShowPassword}
+              edge="end"
+              >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+            } />
+          </FormControl>
 
           <Button variant="outlined" type="submit" color="info" fullWidth size="large" endIcon={<SendIcon />} sx={{marginTop:'25px'}} disabled={buttonDisabled}>Üye Ol</Button>
         </Box>
