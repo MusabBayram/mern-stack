@@ -3,6 +3,17 @@ import { FaWindowClose } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { notSil } from '../features/data/dataSlice'
 
+
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import { red,yellow,green } from '@mui/material/colors';
+import CloseIcon from '@mui/icons-material/Close';
+
+
 function Not({not}) {
   
   const [oncelikText, setOncelikText] = useState('')

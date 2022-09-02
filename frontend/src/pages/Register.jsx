@@ -22,6 +22,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FilledInput from '@mui/material/FilledInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
+import Alert from '@mui/material/Alert';
 
 function Register() {
 
@@ -42,6 +45,15 @@ function Register() {
   const [buttonDisabled,setButtonDisabled]=useState(true)
   
   const [showPassword,setShowPassword]=useState(false)
+
+  
+  const [open, setOpen] = useState(false);
+  const [hataMesaj,setHataMesaj]=useState('')
+
+  
+  const closeSnackbar = () => {
+    setOpen(false);
+  };
 
   const onChange = (e) => {
     setFormData((onceki)=>({
@@ -64,7 +76,9 @@ function Register() {
     //console.log(formData);
     
     if(parola !==parolaKontrol){
-      toast.error('Parolalar eşleşmedi')
+      //toast.error('Parolalar eşleşmedi')      
+      setHataMesaj("Parolalar eşleşmedi");
+		  setOpen(true)
     }
     else{
       const userData ={
@@ -77,7 +91,9 @@ function Register() {
   useEffect(()=>{
 
     if(isHata){
-      toast.error(mesaj)
+      //toast.error(mesaj)
+      setHataMesaj(mesaj);
+		  setOpen(true)
     }
 
     if(isBasari || kullanici){
@@ -91,7 +107,7 @@ function Register() {
   if (isYukleniyor) {
     <Spinner />
   }
-  
+
   return (
     <Container maxWidth="md">
 
@@ -145,6 +161,27 @@ function Register() {
         </Box>
 
       </Stack>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={closeSnackbar}
+        anchorOrigin={{vertical:'bottom',horizontal:'center'}}
+      >
+
+          <Alert severity="error">
+            {hataMesaj} 
+            <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={closeSnackbar}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+          </Alert>
+        
+      </Snackbar>
+
     </Container>
   )
 }

@@ -16,6 +16,12 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Alert from '@mui/material/Alert';
+
+
 
 
 function Login() {
@@ -30,7 +36,14 @@ function Login() {
     parola:''
   })
 
+  const [open, setOpen] = useState(false);
+  const [hataMesaj,setHataMesaj]=useState('')
+
   const { email, parola } = formData
+
+  const closeSnackbar = () => {
+    setOpen(false);
+  };
 
   const onChange = (e) => {
     setFormData((onceki)=>({
@@ -41,7 +54,6 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    //console.log(formData);
 
     const userData ={
       email,
@@ -54,7 +66,9 @@ function Login() {
   useEffect(()=>{
 
     if(isHata){
-      toast.error(mesaj)
+      //toast.error(mesaj)
+      setHataMesaj(mesaj);
+		  setOpen(true)
     }
 
     if(isBasari || kullanici){
@@ -70,42 +84,6 @@ function Login() {
     <Spinner />
   }
 
-  // return (
-  //   <>
-  //     <section className='heading'>
-  //       <h1>
-  //         <FaUserCheck /> Giriş Yap
-  //       </h1>
-  //     </section>
-  //     <section className='form'>
-  //       <form onSubmit={onSubmit}>
-  //         <div className='form-group'>
-  //           <input 
-  //             type="email" 
-  //             className='form-control' 
-  //             id="email"
-  //             name="email"
-  //             value={email}
-  //             placeholder="Email Giriniz"
-  //             onChange={onChange} />
-  //         </div>
-  //         <div className='form-group'>
-  //           <input 
-  //             type="password" 
-  //             className='form-control' 
-  //             id="parola"
-  //             name="parola"
-  //             value={parola}
-  //             placeholder="Parola Giriniz"
-  //             onChange={onChange} />
-  //         </div>
-  //         <div className='form-group'>
-  //           <button type='submit' className='btn btn-block'>Giriş</button>
-  //         </div>
-  //       </form>
-  //     </section>
-  //   </>
-  // )
   return (
     <Container maxWidth="md">
       <Stack spacing={6}>
@@ -123,6 +101,27 @@ function Login() {
           <Button variant="contained" type="submit" color="success" fullWidth size="large" endIcon={<SendIcon />} sx={{marginTop:'25px'}}>Giriş Yap</Button>
         </Box>
     </Stack>
+    <Snackbar
+      open={open}
+      autoHideDuration={6000}
+      onClose={closeSnackbar}
+      anchorOrigin={{vertical:'top',horizontal:'center'}}
+    >
+
+        <Alert severity="error">
+          {hataMesaj} 
+          <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={closeSnackbar}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+        </Alert>
+      
+    </Snackbar>
+
   </Container>
   )
 }
