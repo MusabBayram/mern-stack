@@ -5,6 +5,7 @@ import NotForm from '../components/NotForm';
 import { notlarGetir, reset } from '../features/data/dataSlice'
 import Spinner from '../components/Spinner'
 import Not from '../components/Not';
+import {toast} from 'react-toastify'
 
 function Dashboard() {
 
@@ -15,6 +16,7 @@ function Dashboard() {
   
   useEffect(() => {
     if(isHata){
+      toast.error(mesaj)
       console.log(mesaj);
     }
     
@@ -40,15 +42,15 @@ function Dashboard() {
     <>
       <section className='heading'>
         <h1>Merhaba {kullanici && kullanici.kullaniciAd}</h1>
-        <p>Not Ekle</p>
+        <p>Hoş Geldiniz Not Ekleyebilir Notlarınızı Görüntüleyebilirsiniz</p>
       </section>
       <NotForm />
-      <section className='content'>
+      <section >
         {notlar.length >0 ? (<div className='notlar'>
           {notlar.map((not)=>(
-            <Not key={not._id} not={not}/>
+          <Not key={not._id} not={not}/>
           ))}
-        </div>):(<h3>Henüz not yüklemediniz...</h3>)}
+        </div>):(<h1>Henüz not yüklemediniz...</h1>)}
       </section>
     </>
   )

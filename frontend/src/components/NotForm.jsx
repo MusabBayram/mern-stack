@@ -26,9 +26,6 @@ function NotForm() {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        //console.log(baslik, aciklama, oncelik);
-        window.location.reload()
-        
         dispatch(notOlustur({baslik, aciklama, oncelik}))
         setBaslik('')
         setAciklama('')

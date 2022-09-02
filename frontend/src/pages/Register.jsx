@@ -73,10 +73,8 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    //console.log(formData);
     
-    if(parola !==parolaKontrol){
-      //toast.error('Parolalar eşleşmedi')      
+    if(parola !==parolaKontrol){   
       setHataMesaj("Parolalar eşleşmedi");
 		  setOpen(true)
     }
@@ -91,7 +89,6 @@ function Register() {
   useEffect(()=>{
 
     if(isHata){
-      //toast.error(mesaj)
       setHataMesaj(mesaj);
 		  setOpen(true)
     }
