@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { FaWindowClose } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { notSil } from '../features/data/dataSlice'
 

@@ -12,7 +12,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {kullanici} = useSelector(state => state.auth)
-  const {notlar, isYukleniyor, isHata, isBasari, mesaj} = useSelector(state => state.notlar)
+  const {notlar, isYukleniyor, isHata, mesaj} = useSelector(state => state.notlar)
   
   useEffect(() => {
     if(isHata){
